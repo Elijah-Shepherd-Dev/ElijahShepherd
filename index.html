@@ -16,6 +16,26 @@
             --light: #F7F9FC;
             --gray: #A0A4B8;
             --transition: all 0.3s ease;
+            
+            /* Theme variables */
+            --bg-color: #F7F9FC;
+            --text-color: #2A2D3E;
+            --card-bg: #FFFFFF;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --section-bg: #f0f2f5;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #FFFFFF;
+            --card-bg: #1E1E1E;
+            --header-bg: rgba(30, 30, 30, 0.95);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --section-bg: #1A1A1A;
+            --dark: #FFFFFF;
+            --light: #121212;
+            --gray: #A0A4B8;
         }
 
         * {
@@ -31,9 +51,10 @@
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
+            color: var(--text-color);
+            background-color: var(--bg-color);
             overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         .container {
@@ -42,10 +63,38 @@
             margin: 0 auto;
         }
 
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--card-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        .theme-toggle i {
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
         /* Header & Navigation */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 15px var(--shadow-color);
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -72,25 +121,23 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s infinite linear;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .logo span {
-            color: var(--secondary);
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transition: var(--transition);
-        }
-
-        .logo:hover::after {
-            width: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
@@ -104,7 +151,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--text-color);
             font-weight: 500;
             transition: var(--transition);
             position: relative;
@@ -121,7 +168,7 @@
             height: 2px;
             bottom: -5px;
             left: 0;
-            background-color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             transition: var(--transition);
         }
 
@@ -134,6 +181,7 @@
             font-size: 24px;
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text-color);
         }
 
         .mobile-menu:hover {
@@ -188,6 +236,24 @@
             font-size: 3.5rem;
             margin-bottom: 20px;
             line-height: 1.2;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid white;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
         }
 
         .hero p {
@@ -320,7 +386,7 @@
 
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--dark);
+            color: var(--text-color);
             position: relative;
             display: inline-block;
         }
@@ -330,7 +396,7 @@
             position: absolute;
             width: 70px;
             height: 4px;
-            background-color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
@@ -346,7 +412,7 @@
             flex: 1;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px var(--shadow-color);
             position: relative;
         }
 
@@ -396,24 +462,25 @@
         }
 
         .skill {
-            background-color: var(--light);
+            background-color: var(--card-bg);
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 10px var(--shadow-color);
             transition: var(--transition);
             cursor: pointer;
+            border: 1px solid rgba(108, 99, 255, 0.1);
         }
 
         .skill:hover {
             transform: translateY(-3px);
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
 
         /* Services Section */
         .services {
-            background-color: #f0f2f5;
+            background-color: var(--section-bg);
         }
 
         .services-grid {
@@ -423,14 +490,15 @@
         }
 
         .service-card {
-            background-color: white;
+            background-color: var(--card-bg);
             padding: 40px 30px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 20px var(--shadow-color);
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(108, 99, 255, 0.1);
         }
 
         .service-card::before {
@@ -445,7 +513,7 @@
 
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 30px var(--shadow-color);
         }
 
         .service-icon {
@@ -513,7 +581,7 @@
         .ai-robot {
             font-size: 150px;
             color: rgba(255, 255, 255, 0.8);
-            animation: pulse 2s infinite;
+            animation: pulse 2s infinite, spectrum 5s infinite linear;
             margin-bottom: 20px;
         }
 
@@ -521,6 +589,11 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
+        }
+
+        @keyframes spectrum {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         .coming-soon {
@@ -583,12 +656,13 @@
             border-radius: 30px;
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text-color);
         }
 
         .filter-btn.active, .filter-btn:hover {
-            background-color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
-            border-color: var(--primary);
+            border-color: transparent;
         }
 
         .portfolio-grid {
@@ -600,15 +674,16 @@
         .portfolio-item {
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px var(--shadow-color);
             position: relative;
             cursor: pointer;
             transition: var(--transition);
+            background: var(--card-bg);
         }
 
         .portfolio-item:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px var(--shadow-color);
         }
 
         .portfolio-img {
@@ -739,7 +814,7 @@
         .contact-icon {
             width: 50px;
             height: 50px;
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -751,7 +826,6 @@
         }
 
         .contact-item:hover .contact-icon {
-            background-color: var(--secondary);
             transform: rotate(15deg);
         }
 
@@ -767,6 +841,8 @@
             border-radius: 5px;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
+            background: var(--card-bg);
+            color: var(--text-color);
         }
 
         .form-control:focus {
@@ -877,7 +953,7 @@
             right: 30px;
             width: 50px;
             height: 50px;
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -888,7 +964,7 @@
             visibility: hidden;
             transition: var(--transition);
             z-index: 999;
-            box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
+            box-shadow: 0 4px 10px var(--shadow-color);
         }
 
         .back-to-top.show {
@@ -897,7 +973,6 @@
         }
 
         .back-to-top:hover {
-            background-color: var(--secondary);
             transform: translateY(-5px);
         }
 
@@ -936,6 +1011,36 @@
             }
         }
 
+        /* Spectrum Text */
+        .spectrum-text {
+            background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0000ff, #8000ff, #ff0080);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: spectrumShift 5s infinite linear;
+        }
+
+        @keyframes spectrumShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Gradient Border */
+        .gradient-border {
+            position: relative;
+            border-radius: 10px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        .gradient-border > div {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .about-content, .contact-content, .ai-content {
@@ -962,11 +1067,11 @@
                 top: 80px;
                 left: 0;
                 width: 100%;
-                background-color: white;
+                background-color: var(--header-bg);
                 flex-direction: column;
                 align-items: center;
                 padding: 20px 0;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 10px var(--shadow-color);
                 transform: translateY(-150%);
                 transition: var(--transition);
             }
@@ -1022,6 +1127,11 @@
     </style>
 </head>
 <body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <!-- Header -->
     <header id="header">
         <div class="container">
@@ -1052,7 +1162,7 @@
         </div>
         <div class="container">
             <div class="hero-content">
-                <h1>Full Stack Web Designer & Developer</h1>
+                <h1><span class="typewriter">Full Stack Web Designer & Developer</span></h1>
                 <p>I create stunning, responsive websites with modern technologies that deliver exceptional user experiences.</p>
                 <div class="hero-buttons">
                     <a href="#portfolio" class="btn">View My Work</a>
@@ -1102,47 +1212,59 @@
                 <h2>My Services</h2>
             </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop-code"></i>
+                <div class="gradient-border">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Web Development</h3>
+                        <p>Custom website development using modern technologies and frameworks to create fast, secure, and scalable web applications.</p>
                     </div>
-                    <h3>Web Development</h3>
-                    <p>Custom website development using modern technologies and frameworks to create fast, secure, and scalable web applications.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-palette"></i>
+                <div class="gradient-border">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>UI/UX Design</h3>
+                        <p>User-centered design approach creating intuitive interfaces that enhance user experience and drive engagement.</p>
                     </div>
-                    <h3>UI/UX Design</h3>
-                    <p>User-centered design approach creating intuitive interfaces that enhance user experience and drive engagement.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                <div class="gradient-border">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Responsive Design</h3>
+                        <p>Creating websites that look and function perfectly on all devices, from desktop to mobile.</p>
                     </div>
-                    <h3>Responsive Design</h3>
-                    <p>Creating websites that look and function perfectly on all devices, from desktop to mobile.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shopping-cart"></i>
+                <div class="gradient-border">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>E-commerce Solutions</h3>
+                        <p>Building online stores with secure payment gateways, inventory management, and customer-friendly interfaces.</p>
                     </div>
-                    <h3>E-commerce Solutions</h3>
-                    <p>Building online stores with secure payment gateways, inventory management, and customer-friendly interfaces.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-robot"></i>
+                <div class="gradient-border">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>AI Integration</h3>
+                        <p>Implementing AI assistants and chatbots to enhance user experience and provide instant support.</p>
                     </div>
-                    <h3>AI Integration</h3>
-                    <p>Implementing AI assistants and chatbots to enhance user experience and provide instant support.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tools"></i>
+                <div class="gradient-border">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Website Maintenance</h3>
+                        <p>Ongoing support, updates, and maintenance to keep your website secure and up-to-date.</p>
                     </div>
-                    <h3>Website Maintenance</h3>
-                    <p>Ongoing support, updates, and maintenance to keep your website secure and up-to-date.</p>
                 </div>
             </div>
         </div>
@@ -1157,7 +1279,7 @@
             </div>
             <div class="ai-content">
                 <div class="ai-text">
-                    <h3>Coming Soon: AI-Powered Websites</h3>
+                    <h3>Coming Soon: <span class="spectrum-text">AI-Powered Websites</span></h3>
                     <p>I'm working on integrating advanced AI assistants into websites to provide enhanced user experiences. These AI helpers will be able to:</p>
                     
                     <div class="ai-features">
@@ -1383,6 +1505,40 @@
     </div>
 
     <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or use OS preference
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
         // Mobile Menu Toggle
         const mobileMenu = document.querySelector('.mobile-menu');
         const navLinks = document.querySelector('.nav-links');
@@ -1516,6 +1672,30 @@
         }
         
         createParticles();
+
+        // Typewriter Effect
+        const typewriterElement = document.querySelector('.typewriter');
+        const text = typewriterElement.textContent;
+        typewriterElement.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                typewriterElement.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            } else {
+                // Restart the typewriter effect after a delay
+                setTimeout(() => {
+                    typewriterElement.textContent = '';
+                    i = 0;
+                    typeWriter();
+                }, 3000);
+            }
+        }
+        
+        // Start the typewriter effect after a short delay
+        setTimeout(typeWriter, 1000);
     </script>
 </body>
 </html>
